@@ -38,7 +38,6 @@
                 let bHeight = document.documentElement.clientHeight;
                 this.$refs.banner.style.height=bHeight+'px';
             });
-
         },
         components:{
             navigation
@@ -54,7 +53,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     body,html{overflow: hidden;}
     .banner {background:url(../public/images/banner.jpg) no-repeat center 65%;background-size:cover;transition:all ease 0.5s;position: relative;
     margin-top: 0;}

@@ -1,11 +1,11 @@
 <template>
     <div class="menu clearfix">
         <ul class="menu-con fl clearfix">
-            <li class="menu-list fl">
+            <li class="menu-list fl" @click="navto('home')">
                 <p class="list1">Home</p>
                 <p class="list2">Home</p>
             </li>
-            <li class="menu-list fl">
+            <li class="menu-list fl" @click="navto('discover')">
                 <p class="list1">Discover</p>
                 <p class="list2">Discover</p>
             </li>
@@ -35,6 +35,9 @@
                 this.$emit('bannerBack');
                 this.icon1=true;
                 this.icon2=false;
+            },
+            navto(direction){
+                this.$router.push(`/${direction}`);
             }
         }
     }
