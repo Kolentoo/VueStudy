@@ -55,6 +55,7 @@
 
 <style scoped>
     body,html{overflow: hidden;}
+    #home .menu {position: fixed;}
     .banner {background:url(../public/images/banner.jpg) no-repeat center 65%;background-size:cover;transition:all ease 0.5s;position: relative;
     margin-top: 0;}
     .banner h1{padding-top: 320px;text-align: center;color:#fff;font-size: 55px;font-weight:bold;}

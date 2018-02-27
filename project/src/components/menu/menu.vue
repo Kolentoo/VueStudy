@@ -44,7 +44,7 @@
 </script>
 
 <style>
-    .menu {font-size: 22px;padding-top: 25px;z-index:500;position: fixed;top: 25px;left: 0;width: 100%;}
+    .menu {font-size: 22px;padding-top: 25px;z-index:500;position: absolute;top: 25px;left: 0;width: 100%;}
     .menu-con {margin-left: 40px;}
     .menu li {text-align: center;cursor:pointer;padding:0 20px;}
     .menu li {color:#fff;transition:all ease 0.5s;display: block;}
