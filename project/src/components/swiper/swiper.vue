@@ -5,7 +5,7 @@
         <div class="content">
             <swiper :options="swiperOption" id="swiper" v-if="seen">
                 <swiper-slide v-for="(item,idx) in nowList.movies" :key="idx" class="block" v-if="movie==='now'">
-                    <img :src="item.img" class="mpic block" alt="">
+                    <img :src="item.img" class="mpic block" @click="minfo(item.movieId)" alt="">
                     <div class="detail clearfix">
                         <div class="score fl tc">
                             <p class="p1">总评分</p>
@@ -17,11 +17,10 @@
                         </div>
                     </div>
                     <p class="comments">{{item.commonSpecial}}</p>
-
                 </swiper-slide>
 
                 <swiper-slide v-for="(item,idx) in nowList" :key="idx" class="block" v-if="movie==='new'">
-                    <img :src="item.image" class="mpic block" alt="" v-if="movie==='new'">
+                    <img :src="item.image" class="mpic block" @click="minfo(item.id)" alt="" v-if="movie==='new'">
                     <p class="mtitle">{{item.title}} <i>({{item.releaseDate}})</i></p>
                     <p class="actor">演员：{{item.actor1}} {{item.actor2}}</p>
                     <p class="info"><em>类型：{{item.type}}</em> <em> 地区：{{item.locationName}}</em></p>
@@ -80,6 +79,11 @@
                 this.seen=true
                 console.log(this.nowList)
             })
+        }
+    },
+    methods:{
+        minfo(mid){
+            this.$router.push(`/movie/mdetail/${mid}`);
         }
     }
   }

@@ -115,7 +115,7 @@
             },
             indetail(content_id,self,idx){
                 if(this.location===0){
-                    this.$router.push(`/disdetail/${content_id}/music`);
+                    this.$router.push(`/discover/disdetail/${content_id}/music`);
                 }else if(this.location===1){
                      this.off=true
                      this.number = idx
