@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '../pages/home'
 import discover from '../pages/discover'
 import disdetail from '../pages/disdetail'
+import movie from '../pages/movie'
 
 Vue.use(Router)
 
@@ -10,7 +11,7 @@ export default new Router({
   routes: [
     {
       path:'/',
-      redirect:'/discover'
+      redirect:'/home'
     },
     {
       path: '/home',
@@ -33,6 +34,11 @@ export default new Router({
       path:'/disdetail/:id/:key',
       name:'disdetail',
       component:disdetail
+    },
+    {
+      path:'/movie',
+      name:'movie',
+      component:movie
     }
   ]
 })

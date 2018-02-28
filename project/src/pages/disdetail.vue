@@ -86,7 +86,7 @@
     .lyric-con {height: 270px;overflow-y: scroll;}
     .txt {margin:5px 0 0 450px;font-size: 16px;}
     .txt span{display: block;margin-top: 5px;}
-    .story-info {margin-top: 100px;}
+    .story-info {margin-top: 70px;}
     .story-info .spic {width: 80px;height:80px;border-radius:100%;margin-bottom: 20px;}
     .story-info .sinfo {font-size: 14px;}
 </style>
