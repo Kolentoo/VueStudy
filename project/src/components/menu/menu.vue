@@ -13,6 +13,10 @@
                 <p class="list1">Movie</p>
                 <p class="list2">Movie</p>
             </li>
+            <li class="menu-list fl" @click="navto('video')">
+                <p class="list1">Video</p>
+                <p class="list2">Video</p>
+            </li>
         </ul>
         <div class="btn fr">
             <img class="icon1 block" v-show="icon1" @click="intro()" src="../menu/menu.png" alt="">

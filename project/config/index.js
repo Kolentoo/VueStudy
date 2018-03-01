@@ -11,13 +11,21 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-    '/api': {
+    '/apib': {
       target: 'http://api-m.mtime.cn',
       changeOrigin: true,
       pathRewrite: {
-        '^/api': ''
-      }
+        '^/apib': ''
+      },
+    },
+    '/apia': {
+      target: 'http://baobab.kaiyanapp.com/api',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/apia': ''
+      },
     }
+    
   },
 
     // Various Dev Server settings

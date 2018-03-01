@@ -3,7 +3,7 @@
         <h2 v-if="movie==='now'">正在热映 <b>{{nowList.count}}</b> 部</h2>
         <h2 v-if="movie==='new'">即将上映</h2>
         <div class="content">
-            <swiper :options="swiperOption" id="swiper" v-if="seen">
+            <swiper :options="swiperOption" v-if="seen">
                 <swiper-slide v-for="(item,idx) in nowList.movies" :key="idx" class="block" v-if="movie==='now'">
                     <img :src="item.img" class="mpic block" @click="minfo(item.movieId)" alt="">
                     <div class="detail clearfix">
@@ -28,10 +28,17 @@
                 </swiper-slide>
 
             </swiper>
-            <div class="swiper-button-prev swiper-btn" slot="button-prev">
+            <div class="swiper-button-prev swiper-btn s1" slot="button-prev" v-if="movie==='now'">
                 <div class="arrow-btn btn1"></div>
             </div>
-            <div class="swiper-button-next swiper-btn" slot="button-next">
+            <div class="swiper-button-next swiper-btn s2" slot="button-next" v-if="movie==='now'">
+                <div class="arrow-btn btn2"></div>
+            </div>
+
+            <div class="swiper-button-prev swiper-btn s3" slot="button-prev" v-if="movie==='new'">
+                <div class="arrow-btn btn1"></div>
+            </div>
+            <div class="swiper-button-prev swiper-btn s4" slot="button-next" v-if="movie==='new'">
                 <div class="arrow-btn btn2"></div>
             </div>
         </div>
@@ -56,8 +63,8 @@
             clickable: true
           },
           navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
+            nextEl: '.s2',
+            prevEl: '.s1'
           }
         },
         nowList:[],
@@ -76,8 +83,9 @@
             this.$axios.get('/api/Movie/MovieComingNew.api?locationId=290')
             .then(res=>{
                 this.nowList = res.data.moviecomings
+                this.swiperOption.navigation.nextEl='.s4'
+                this.swiperOption.navigation.prevEl='.s3'
                 this.seen=true
-                console.log(this.nowList)
             })
         }
     },
@@ -90,7 +98,6 @@
 </script>
 
 <style>
-    
     .section {width: 1400px;margin:30px auto 60px;}
     .section h2{font-size: 26px;margin-bottom: 20px;}
     .mpic {width: 100%;max-height:380px;overflow: hidden;}
@@ -105,8 +112,10 @@
     .content {position: relative;}
     .section .swiper-btn {width: 65px;height: 65px;border-radius:50%;background: rgba(0,0,0,0.5);overflow: hidden;}
     .section .swiper-btn .arrow-btn {width: 24px;}
-    .section .swiper-button-prev {left: -150px;}
-    .section .swiper-button-next {right: -150px;}
+    .section .s1 {left: -150px;}
+    .section .s2 {right: -150px;}
+    .section .s3 {left: -150px;}
+    .section .s4 {right: -150px;left:auto;}
     .section .swiper-btn .btn1 {background: url('../../public/images/arrow1.png') no-repeat;width: 24px;height: 26px;margin:19px 0 0 22px;}
     .section .swiper-btn .btn2 {background: url('../../public/images/arrow2.png') no-repeat;width: 24px;height: 26px;margin:19px 0 0 26px;}
     .mtitle {font-size: 20px;margin-top: 2px;}

@@ -19,7 +19,7 @@
                 an automotive advertising agency.</dd>
             <dd>My hobbies and passions include User Experience, Web Development, Digital Marketing and Photography. 
                 My goal is to solve problems through thoughtful ideas that translate into designs for various mediums.</dd>
-            <dd>Connect with me on <a href="">Weibo</a></dd>
+            <dd>Connect with me on <a href="https://weibo.com/u/1921492471?refer_flag=1001030101_" target="_blank">Weibo</a></dd>
         </dl>
     </div>
   </div>

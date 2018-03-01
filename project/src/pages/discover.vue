@@ -2,15 +2,9 @@
     <div class="video">
         <navigation @bannerTop="bannerTop" @bannerBack="bannerBack"></navigation>
         <div :class="['video-top',{bannerChange:bannerChange}]" ref="video">
-            <video src="http://static.paixin.com/nossr/static/media/a3bce81e7ed152b290a46a505a9bfd8f.17682ef.mp4" autoplay="autoplay" loop="loop">
-            </video>
             <div class="video-title">
-                <h1>FOR CREATIVES</h1>
-                <h2>Discover The World's Best Life</h2>
-                <div class="search-box">
-                <input type="text" class="search" placeholder="Search For Free Videos">
-                <img class="sbtn block" src="../public/images/search.png" alt="">
-                </div>
+                <h1>FOR YOU</h1>
+                <h2>Hand-picked by our editors</h2>
             </div>
         </div>
         <div class="video-content">
@@ -96,6 +90,10 @@
 
         },
         created(){
+            this.$nextTick(()=>{
+                let bHeight = document.documentElement.clientHeight;
+                this.$refs.video.style.height=bHeight+'px';
+            })
             this.$axios.get('http://v3.wufazhuce.com:8000/api/channel/music/more/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android').then((res)=>{
                 this.movieList = res.data.data;
             })
@@ -133,18 +131,14 @@
 
 <style scoped>
   body,html{overflow: visible;}
-  .video {padding-bottom: 120px;}
+  .video {margin-bottom: 120px;}
   .navigation {position: absolute;top: 0;left: 0;width: 100%;z-index:100;}
-  .video-top {width: 100%;background-size: cover;margin-top: 0;transition:all ease 0.5s;}
+  .video-top {margin-top: 0;transition:all ease 0.5s;background: url('../public/images/mbanner2.jpg') no-repeat;background-size: cover;}
   .bannerChange {margin-top: -450px;}
-  .video video{width: 100%;height:100%;cursor: inherit;object-fit: cover;}
   .video-title {position: absolute;width: 100%;top: 0;left: 0;}
-  .video h1{text-align: center;color:#fff;font-size: 65px;font-weight:bold;padding-top: 300px;transition:all ease 0.5s;}
+  .video h1{text-align: center;color:#fff;font-size: 65px;font-weight:bold;padding-top: 380px;transition:all ease 0.5s;}
   .bannerChange h1{padding-top: 100px;transition:all ease 0.5s;}
   .video h2{text-align: center;font-size: 38px;color:#fff;}
-  .search-box {width: 850px;margin:50px auto 0;position: relative;}
-  .search-box input{background: rgba(255,255,255,0.7);border-radius:10px;width: 100%;height: 75px;line-height: 75px;
-  color:#333;font-size:24px;padding-left: 30px;outline:none;text-align: center;}
   .search-box .sbtn {position: absolute;width:34px;cursor: pointer;top: 3px;right: -20px;padding:20px;}
   .content-title {margin-top: 75px;}
   .content-title h3{color:#333;font-size: 36px;}

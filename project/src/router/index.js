@@ -5,6 +5,7 @@ import discover from '../pages/discover'
 import disdetail from '../pages/disdetail'
 import movie from '../pages/movie'
 import mdetail from '../pages/mdetail'
+import video from '../pages/video'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path:'/movie/mdetail/:mid',
       name:'mdetail',
       component:mdetail
+    },
+    {
+      path:'/video',
+      name:'video',
+      component:video
     }
   ]
 })

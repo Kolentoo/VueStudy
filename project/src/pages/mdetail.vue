@@ -1,8 +1,23 @@
 <template>
     <div class="mdetail" ref="mdetail">
-        <img class="mbj block g10" :src="item" alt="" v-for="(item,idx) in movieDetail.images" v-if="idx==1">
+        <img class="mbj block g10" :src="movieDetail.images[0]" alt="" ref="mbj">
         <div class="mcontent">
-            
+            <div class="mcon clearfix">
+                <img class="mimg block fl" :src="movieDetail.image" alt="">
+                <div class="info fr">
+                    <p class="title"><b>{{movieDetail.titleCn}}</b> ({{movieDetail.titleEn}})</p>
+                    <p class="year">年份：{{movieDetail.year}} 评分：{{movieDetail.rating}} {{movieDetail.scoreCount}}人评价</p>
+                    <p class="length">片长：{{movieDetail.runTime}} 类型：{{movieDetail.type}}</p>
+                    <p class="txt">{{movieDetail.content}}</p>
+                </div>
+            </div>
+            <div class="photo">
+                <ul class="photo-con">
+                    <li class="photo-list pointer" v-for="(photo,idx) in photos" :key="idx" @click="bjChange(photo,idx)">
+                        <img class="block photo-pic" :src="photo" alt="">
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -11,32 +26,51 @@
     export default{
         data(){
             return{
-                movieDetail:[],
-                idx:1
+                movieDetail:{
+                    images:[]
+                },
+                photos:[],
+                location:0
             }
         },
         created(){
-            
             this.$nextTick(function(){
                 let bHeight = document.documentElement.clientHeight;
                 this.$refs.mdetail.style.height=bHeight+'px';
-                console.log(this.$refs.mdetail)
             })
             let mid = this.$route.params.mid;
-            this.$axios.get('api/movie/detail.api?locationId=290',{
+            this.$axios.get('apib/movie/detail.api?locationId=290',{
                 params:{
                     movieId:mid
                 }
             }).then(res=>{
                 this.movieDetail=res.data
-                // console.log(this.movieDetail))
+                this.photos = res.data.images
             })
-            
+        },
+        methods:{
+            bjChange(picUrl,idx){
+                this.$refs.mbj.src=picUrl
+            }
         }
     }
 </script>
 
 <style>
-    .mdetail {overflow: hidden;width: 100%;}
-    /*.mbj {filter:blur(0px);}*/
+    ::-webkit-scrollbar{width:0px}
+    ::-moz-scrollbar{width:0px}
+    .mdetail {overflow: hidden;width: 100%;position: relative;}
+    .mbj {height: 100%;filter:blur(3px);}
+    .mcontent {width: 100%;height: 100%;position: absolute;top: 0;left: 0;z-index:50;}
+    .mcon {width: 780px;padding:20px;background: rgba(0,0,0,0.5);color:#fff;margin:100px auto 0;}
+    .mimg {width: 230px;}
+    .info {width: 530px;}
+    .title {font-size: 30px;margin-bottom: 10px;}
+    .year {font-size: 14px;}
+    .length {font-size: 14px;}
+    .txt {font-size: 14px;margin-top: 10px;height: 210px;overflow-y: scroll;}
+    .photo {margin-top: 100px;}
+    .photo-con {display: flex;justify-content:center;align-items: stretch;margin:0 10%;}
+    .photo-list {width: 20%;margin:0 2%;box-shadow:0 0 20px rgba(0,0,0,0.3);max-height:220px;}
+    .photo-list img{width: 100%;height: 100%;}
 </style>
