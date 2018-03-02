@@ -16,7 +16,7 @@
         <div class="vcontent">
             <h2 class="tc title">— Daily appetizers for your eyes —</h2>
             <p class="tips tc">每日精选 视频推荐</p>
-            <ul class="vcon">
+            <ul class="vcon content">
                 <li class="vlist clearfix pointer" v-for="(item,idx) in items" :key="idx" v-if="item.type==='video'" @click="play(idx)" @mouseenter="menter(item,idx)" 
                 @mouseleave="mleave(item,idx)">
                     <div :class="['chart clearfix tc fl',{chartChange:location===idx}]">
@@ -33,13 +33,13 @@
                         </div>
                     </div>
                     <div :class="['video-box fr',{videoOn:location===idx}]">
-                        <video controls="controls" class="video-con" :src="item.data.playUrl"></video>
+                        <video controls="controls" class="video-con" :src="item.data.playUrl" :id="'video'+idx"></video>
                     </div>
                     
                 </li>
             </ul>
         </div>
-        <p class="more tc">— More —</p>
+        <p class="more tc">— {{loading}} —</p>
     </div>
 </template>
 
@@ -57,7 +57,10 @@
                 change:true,
                 location:-1,
                 position:-1,
-                status:'pause'
+                status:'pause',
+                loading:'More',
+                nextPage:'',
+                playidx:''
             }
         },
         components:{
@@ -68,12 +71,49 @@
         },
         created(){
             this.$axios.get('apia/v4/discovery/hot',{
-
+                params:{
+                    num:5
+                }
             }).then(res=>{
                 this.items = res.data.itemList.filter((value,key,array)=>{
                    return value.type==='video'
                 });
+                this.nextPage = res.data.nextPageUrl
             })
+            let sw=true;
+            let self = this;
+            window.addEventListener('scroll',function(){  
+                // console.log(document.documentElement.clientHeight+'-----------'+window.innerHeight); // 可视区域高度  
+                // console.log(document.body.scrollTop); // 滚动高度  
+                // console.log(document.body.offsetHeight); // 文档高度  
+                // 判断是否滚动到底部  
+                if(document.documentElement.scrollTop + window.innerHeight - document.body.offsetHeight >= -50) { 
+                    if(sw==true){  
+                        self.loading = 'Loading'
+                        sw = false;
+                        let xurl = self.nextPage.replace('http://baobab.kaiyanapp.com/api','apia');
+                        self.$axios.get(xurl,{
+                        }).then(res=>{
+                            let newItem = res.data.itemList.filter((value,key,array)=>{
+                                return value.type==='video'
+                            });
+                            newItem.forEach((value,key,array)=>{
+                                self.items.push(value);
+                            });
+                            if(res.data.nextPageUrl-0!=0){
+                                self.nextPage = res.data.nextPageUrl;
+                                self.loading='More'
+                                sw = true;
+                            }else{
+                                sw = false;
+                                self.loading='End'
+                            }
+
+                        })
+                             
+                    }  
+                }  
+            }); 
         },
         methods:{
             bannerTop(){
@@ -83,26 +123,16 @@
                 this.bannerChange=false
             },
             play(x){
-                let video = document.getElementsByClassName('video-con');
-                if(this.status==='pause'){
-                    if(this.location===-1){
-                        this.location=x
-                        video[x].play();
-                    }else{
-                        this.location=-1
-                        video[x].pause();
-                    }
-                    this.status='play'
-                }else{
-                    if(this.location===x){
-                        this.location=-1
-                        video[x].pause();
-                    }else{
-                        this.location=x
-                        video[x].play();
-                    }
-                    this.status='pause'
+                this.location=x
+                if(this.playidx){
+                    let vid2 = `video${this.playidx}`;
+                    let videoBefore = document.getElementById(vid2);
+                    videoBefore.pause();
                 }
+                this.playidx=x
+                let vid = `video${x}`;
+                let video = document.getElementById(vid);
+                video.play();
             },
             menter(i,x){
                 if(this.position===-1){
@@ -118,6 +148,7 @@
                     this.position=-1
                 }
             }
+            
         }
     }
 </script>

@@ -6,6 +6,7 @@ import disdetail from '../pages/disdetail'
 import movie from '../pages/movie'
 import mdetail from '../pages/mdetail'
 import video from '../pages/video'
+import weather from '../pages/weather'
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ export default new Router({
       path:'/video',
       name:'video',
       component:video
+    },
+    {
+      path:'/weather',
+      name:'weather',
+      component:weather
     }
   ]
 })

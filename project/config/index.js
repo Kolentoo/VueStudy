@@ -24,6 +24,13 @@ module.exports = {
       pathRewrite: {
         '^/apia': ''
       },
+    },
+    '/apic': {
+      target: 'https://api.seniverse.com',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/apic': ''
+      },
     }
     
   },

@@ -17,6 +17,10 @@
                 <p class="list1">Video</p>
                 <p class="list2">Video</p>
             </li>
+            <li class="menu-list fl" @click="navto('weather')">
+                <p class="list1">Weather</p>
+                <p class="list2">Weather</p>
+            </li>
         </ul>
         <div class="btn fr">
             <img class="icon1 block" v-show="icon1" @click="intro()" src="../menu/menu.png" alt="">
