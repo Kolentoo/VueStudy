@@ -26,7 +26,7 @@ module.exports = {
       },
     },
     '/apic': {
-      target: 'https://api.seniverse.com',
+      target: 'http://gank.io',
       changeOrigin: true,
       pathRewrite: {
         '^/apic': ''

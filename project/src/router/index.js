@@ -6,7 +6,8 @@ import disdetail from '../pages/disdetail'
 import movie from '../pages/movie'
 import mdetail from '../pages/mdetail'
 import video from '../pages/video'
-import weather from '../pages/weather'
+import reading from '../pages/reading'
+import kolento from '../pages/kolento'
 
 Vue.use(Router)
 
@@ -54,9 +55,14 @@ export default new Router({
       component:video
     },
     {
-      path:'/weather',
-      name:'weather',
-      component:weather
+      path:'/reading',
+      name:'reading',
+      component:reading
+    },
+    {
+      path:'/kolento',
+      name:'kolento',
+      component:kolento
     }
   ]
 })
