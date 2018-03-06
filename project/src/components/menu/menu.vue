@@ -13,9 +13,9 @@
                 <p class="list1">Other</p>
                 <p class="list2">Other</p>
             </li>
-            <li class="menu-list fl" @click="navto('kolento')">
-                <p class="list1">Kolento</p>
-                <p class="list2">Kolento</p>
+            <li class="menu-list fl" @click="navto('game')">
+                <p class="list1">Game</p>
+                <p class="list2">Game</p>
             </li>
         </ul>
         <div class="btn fr">

@@ -9,7 +9,7 @@ import video from '../pages/video'
 import reading from '../pages/reading'
 import fun from '../pages/fun'
 import other from '../pages/other'
-import kolento from '../pages/kolento'
+import game from '../pages/game'
 
 Vue.use(Router)
 
@@ -72,9 +72,9 @@ export default new Router({
       component:other
     },
     {
-      path:'/kolento',
-      name:'kolento',
-      component:kolento
+      path:'/game',
+      name:'game',
+      component:game
     }
   ]
 })
