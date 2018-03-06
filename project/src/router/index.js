@@ -7,6 +7,8 @@ import movie from '../pages/movie'
 import mdetail from '../pages/mdetail'
 import video from '../pages/video'
 import reading from '../pages/reading'
+import fun from '../pages/fun'
+import other from '../pages/other'
 import kolento from '../pages/kolento'
 
 Vue.use(Router)
@@ -35,7 +37,7 @@ export default new Router({
         // ]
     },
     {
-      path:'/discover/disdetail/:id/:key',
+      path:'/disdetail/:id/:key',
       name:'disdetail',
       component:disdetail
     },
@@ -58,6 +60,16 @@ export default new Router({
       path:'/reading',
       name:'reading',
       component:reading
+    },
+    {
+      path:'/fun',
+      name:'fun',
+      component:fun
+    },
+    {
+      path:'/other',
+      name:'other',
+      component:other
     },
     {
       path:'/kolento',

@@ -9,17 +9,9 @@
                 <p class="list1">Discover</p>
                 <p class="list2">Discover</p>
             </li>
-            <li class="menu-list fl" @click="navto('movie')">
-                <p class="list1">Movie</p>
-                <p class="list2">Movie</p>
-            </li>
-            <li class="menu-list fl" @click="navto('video')">
-                <p class="list1">Video</p>
-                <p class="list2">Video</p>
-            </li>
-            <li class="menu-list fl" @click="navto('reading')">
-                <p class="list1">Reading</p>
-                <p class="list2">Reading</p>
+            <li class="menu-list fl" @click="navto('other')">
+                <p class="list1">Other</p>
+                <p class="list2">Other</p>
             </li>
             <li class="menu-list fl" @click="navto('kolento')">
                 <p class="list1">Kolento</p>

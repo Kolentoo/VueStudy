@@ -16,21 +16,28 @@ module.exports = {
       changeOrigin: true,
       pathRewrite: {
         '^/apib': ''
-      },
+      }
     },
     '/apia': {
       target: 'http://baobab.kaiyanapp.com/api',
       changeOrigin: true,
       pathRewrite: {
         '^/apia': ''
-      },
+      }
     },
     '/apic': {
       target: 'http://gank.io',
       changeOrigin: true,
       pathRewrite: {
         '^/apic': ''
-      },
+      }
+    },
+    '/apid': {
+      target: 'http://api.jisuapi.com',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/apid': ''
+      }
     }
     
   },

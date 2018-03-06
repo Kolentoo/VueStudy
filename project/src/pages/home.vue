@@ -3,12 +3,8 @@
     <div :class="['banner',{bannerChange:bannerChange}]" ref="banner">
         <navigation @bannerTop="bannerTop" @bannerBack="bannerBack"></navigation>
         <div class="title">
-            <transition name="h1">
-                <h1 class="h1">让美好触手可及!</h1>
-            </transition>
-            <transition name="h2">
-                <h2 class="h2">Closer To Goodliness</h2>
-            </transition>
+            <h1 :class="['h1',{on1:on1}]">让美好触手可及!</h1>
+            <h2 :class="['h2',{on2:on2}]">Closer To Goodliness</h2>
         </div>
     </div>
     <div class="index-intro">
@@ -30,13 +26,17 @@
     export default{
         data(){
             return{
-                bannerChange:false
+                bannerChange:false,
+                on1:false,
+                on2:false
             }
         },
         created(){
             this.$nextTick(function(){
                 let bHeight = document.documentElement.clientHeight;
                 this.$refs.banner.style.height=bHeight+'px';
+                this.on1=true;
+                this.on2=true;
             });
         },
         components:{
@@ -58,8 +58,10 @@
     #home .menu {position: fixed;}
     .banner {background:url(../public/images/banner.jpg) no-repeat center 65%;background-size:cover;transition:all ease 0.5s;position: relative;
     margin-top: 0;}
-    .banner h1{padding-top: 320px;text-align: center;color:#fff;font-size: 55px;font-weight:bold;}
-    .banner h2{font-size: 40px;text-align: center;color:#fff;font-weight:bold;}
+    .banner h1{padding-top: 460px;text-align: center;color:#fff;font-size: 55px;font-weight:bold;transition:all ease 0.8s;opacity: 0;}
+    .banner h2{font-size: 40px;text-align: center;color:#fff;font-weight:bold;transition:all ease 1s;opacity: 0;margin-top: 60px;}
+    .banner .on1 {padding-top: 420px;opacity: 1;}
+    .banner .on2 {margin-top: 0;opacity: 1;}
     .bannerChange {margin-top: -550px;}
     .index-intro {width: 800px;margin:80px auto 0;padding-bottom: 80px;color: #4a4a4a;font-family: "open sans";}
     .index-intro h1 {font-size: 50px;font-weight:bold;line-height: 60px;}
