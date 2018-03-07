@@ -2,7 +2,7 @@
     <div class="game" ref="banner">
         <navigation></navigation>
         <div class="gcontent">
-            <canvas id="chess" width="610px" height="610px" @click="go"></canvas>
+            <canvas id="chess" width="450px" height="450px" @click="go"></canvas>
         </div>
     </div>
 </template>
@@ -39,12 +39,12 @@
             context.strokeStyle = 'rgb(93,58,30)';
 
             // 棋盘
-            for(let i = 0;i<20;i++){
-                context.moveTo(20+ i*30,20);
-                context.lineTo(20+ i*30,590);
+            for(let i = 0;i<15;i++){
+                context.moveTo(15+ i*30,15);
+                context.lineTo(15+ i*30,435);
                 context.stroke();
-                context.moveTo(20,20+i*30);
-                context.lineTo(590,20+i*30);
+                context.moveTo(15,15+i*30);
+                context.lineTo(435,15+i*30);
                 context.stroke();
             }
 
@@ -122,9 +122,8 @@
                 var context  = chess.getContext('2d');
                 context.beginPath();
                 context.arc(15+ i*30,15+ j*30,13,0,2*Math.PI);
-                context.closePath();
                 var gradient = context.createRadialGradient(15+ i*30+2,15+ i*30-2,13,15+ i*30+2,15+ i*30-2,0);
-                if(this.me){
+                if(this.me==true){
                     gradient.addColorStop(0,'#0a0a0a');
                     gradient.addColorStop(1,'#636766');
                 }else{
@@ -133,6 +132,7 @@
                 }
                 context.fillStyle = gradient;
                 context.fill();
+                context.closePath();
             },
             computerAI(){
                 var myScore = [];
@@ -142,8 +142,8 @@
                     myScore[i]=[];
                     cupScore[i]=[];
                     for(let j =0;j<15;j++){
-                        myScore[i][j]=[];
-                        cupScore[i][j]=[];
+                        myScore[i][j]=0;
+                        cupScore[i][j]=0;
                     }
                 }
                 this.mys = myScore;
@@ -164,11 +164,11 @@
                                     }
 
                                     if(this.cupwinGroup[k]==1){
-                                        this.cups[i][j]+=300
+                                        this.cups[i][j]+=221
                                     }else if(this.cupwinGroup[k]==2){
-                                        this.cups[i][j]+=800
+                                        this.cups[i][j]+=553.5
                                     }else if(this.cupwinGroup[k]==3){
-                                        this.cups[i][j]+=3000
+                                        this.cups[i][j]+=2200
                                     }else if(this.cupwinGroup[k]==4){
                                         this.cups[i][j]+=20000
                                     }
@@ -178,13 +178,14 @@
                                 this.maxGroup=this.mys[i][j];
                                 this.uGroup=i;
                                 this.vGroup=j;
-                            }else{
+                            }else if(this.mys[this.uGroup][this.vGroup]<this.maxGroup){
                                 if(this.cups[i][j]>this.cups[this.uGroup][this.vGroup]){
                                     this.uGroup=i;
                                     this.vGroup=j;
                                 }
                             }
-                            if(this.cups[i][j]>this.maxGroup){
+                            
+                            if(this.cups[i][j]>=this.maxGroup){
                                 this.maxGroup=this.cups[i][j];
                                 this.uGroup=i;
                                 this.vGroup=j;
