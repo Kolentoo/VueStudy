@@ -2,7 +2,7 @@
     <div class="game" ref="banner">
         <navigation></navigation>
         <div class="gcontent">
-            <canvas id="chess" width="450px" height="450px" @click="go"></canvas>
+            <canvas id="chess" width="610px" height="610px" @click="go"></canvas>
         </div>
     </div>
 </template>
@@ -13,7 +13,17 @@
         data(){
             return{
                 me:true,
-                chessBoard:[]
+                chessBoard:[],
+                winsGroup:[],
+                countGroup:0,
+                mywinGroup:[],
+                cupwinGroup:[],
+                mys:[],
+                cups:[],
+                maxGroup:0,
+                uGroup:0,
+                vGroup:0,
+                over:false
             }
         },
         created(){
@@ -26,28 +36,15 @@
         mounted(){
             var chess =document.getElementById('chess');
             var context  = chess.getContext('2d');
-            context.strokeStyle = 'rgb(157,157,157)';
+            context.strokeStyle = 'rgb(93,58,30)';
 
-            var logo = new Image();
-            logo.src = '../public/images/K.jpg';
-            // logo.onload = function(){
-            //     context.drawImage(logo,0,0,450,450);
-            //     for(let i = 0;i<15;i++){
-            //         context.moveTo(15+ i*30,15);
-            //         context.lineTo(15+ i*30,435);
-            //         context.stroke();
-            //         context.moveTo(15,15+i*30);
-            //         context.lineTo(435,15+i*30);
-            //         context.stroke();
-            //     }
-            // }
             // 棋盘
-            for(let i = 0;i<15;i++){
-                context.moveTo(15+ i*30,15);
-                context.lineTo(15+ i*30,435);
+            for(let i = 0;i<20;i++){
+                context.moveTo(20+ i*30,20);
+                context.lineTo(20+ i*30,590);
                 context.stroke();
-                context.moveTo(15,15+i*30);
-                context.lineTo(435,15+i*30);
+                context.moveTo(20,20+i*30);
+                context.lineTo(590,20+i*30);
                 context.stroke();
             }
 
@@ -57,6 +54,63 @@
                     this.chessBoard[i][j] = 0;
                 }
             }
+
+            // 赢法
+            var wins = []
+            for(let i = 0;i<15;i++){
+                wins[i]=[];
+                for(let j = 0;j<15;j++){
+                    wins[i][j]=[]
+                }
+            }
+            this.winsGroup = wins;
+            var count = 0;
+            // 横线
+            for(let i = 0;i<15;i++){
+                for(let j =0;j<11;j++){
+                    for(let k =0;k<5;k++){
+                        wins[i][j+k][count] = true;
+                    }
+                    count++;
+                }
+            }
+            // 竖线
+            for(let i = 0;i<15;i++){
+                for(let j =0;j<11;j++){
+                    for(let k =0;k<5;k++){
+                        wins[j+k][i][count] = true;
+                    }
+                    count++;
+                }
+            }
+            // 斜线
+            for(let i = 0;i<11;i++){
+                for(let j =0;j<11;j++){
+                    for(let k =0;k<5;k++){
+                        wins[i+k][j+k][count] = true;
+                    }
+                    count++;
+                }
+            }
+            // 散斜线
+            for(let i = 0;i<11;i++){
+                for(let j =14;j>3;j--){
+                    for(let k =0;k<5;k++){
+                        wins[i+k][j-k][count] = true;
+                    }
+                    count++;
+                }
+            }
+            this.countGroup = count;
+
+            var myWin = [];
+            var computerWin = [];
+            for(let i=0;i<count;i++){
+                myWin[i]=0;
+                computerWin[i]=0;
+            }
+            this.mywinGroup = myWin;
+            this.cupwinGroup = computerWin;
 
         },
         components:{
@@ -80,22 +134,117 @@
                 context.fillStyle = gradient;
                 context.fill();
             },
-            go(e){
-                let x = e.offsetX;
-                let y = e.offsetY;
-                let i = Math.floor(x/30);
-                let j = Math.floor(y/30);
-                if(this.chessBoard[i][j]===0){
-                    this.oneStep(i,j,this.me);
-                    this.me = !this.me;
-                    if(this.me){
-                        this.chessBoard[i][j]=1;
-                    }else{
-                        this.chessBoard[i][j]=2;
+            computerAI(){
+                var myScore = [];
+                var cupScore = [];
+
+                for(let i =0;i<15;i++){
+                    myScore[i]=[];
+                    cupScore[i]=[];
+                    for(let j =0;j<15;j++){
+                        myScore[i][j]=[];
+                        cupScore[i][j]=[];
                     }
-                    console.log(this.me)
+                }
+                this.mys = myScore;
+                this.cups = cupScore;
+                for(let i=0;i<15;i++){
+                    for(let j =0;j<15;j++){
+                        if(this.chessBoard[i][j]==0){
+                            for(let k=0;k<this.countGroup;k++){
+                                if(this.winsGroup[i][j][k]){
+                                    if(this.mywinGroup[k]==1){
+                                        this.mys[i][j]+=200
+                                    }else if(this.mywinGroup[k]==2){
+                                        this.mys[i][j]+=400
+                                    }else if(this.mywinGroup[k]==3){
+                                        this.mys[i][j]+=2000
+                                    }else if(this.mywinGroup[k]==4){
+                                        this.mys[i][j]+=10000
+                                    }
+
+                                    if(this.cupwinGroup[k]==1){
+                                        this.cups[i][j]+=300
+                                    }else if(this.cupwinGroup[k]==2){
+                                        this.cups[i][j]+=800
+                                    }else if(this.cupwinGroup[k]==3){
+                                        this.cups[i][j]+=3000
+                                    }else if(this.cupwinGroup[k]==4){
+                                        this.cups[i][j]+=20000
+                                    }
+                                }
+                            }
+                            if(this.mys[i][j]>this.maxGroup){
+                                this.maxGroup=this.mys[i][j];
+                                this.uGroup=i;
+                                this.vGroup=j;
+                            }else{
+                                if(this.cups[i][j]>this.cups[this.uGroup][this.vGroup]){
+                                    this.uGroup=i;
+                                    this.vGroup=j;
+                                }
+                            }
+                            if(this.cups[i][j]>this.maxGroup){
+                                this.maxGroup=this.cups[i][j];
+                                this.uGroup=i;
+                                this.vGroup=j;
+                            }else if(this.cups[i][j]==this.maxGroup){
+                                if(this.mys[i][j]>this.mys[this.uGroup][this.vGroup]){
+                                    this.uGroup=i;
+                                    this.vGroup=j;
+                                }
+                            }
+                        }
+                    }
+                }
+                this.oneStep(this.uGroup,this.vGroup,false);
+                this.chessBoard[this.uGroup][this.vGroup]=2;
+                for(let k = 0;k<this.countGroup;k++){
+                    if(this.winsGroup[this.uGroup][this.vGroup][k]){
+                        this.cupwinGroup[k]++;
+                        this.mywinGroup[k] = 6;
+                        if(this.cupwinGroup[k] == 5){
+                            alert('cup win')
+                            this.over = true;
+                        }
+                    }
+                }
+                if(!this.over){
+                    this.me = !this.me;
+                }
+            },
+            go(e){
+                if(this.over){
+                    return
                 }else{
-                    alert('此处已经有子')
+                    if(!this.me){
+                        return;
+                    }
+                    let x = e.offsetX;
+                    let y = e.offsetY;
+                    let i = Math.floor(x/30);
+                    let j = Math.floor(y/30);
+                    if(this.chessBoard[i][j]==0){
+                        this.oneStep(i,j,this.me);
+                        this.chessBoard[i][j]=1;
+                        for(let k = 0;k<this.countGroup;k++){
+                            if(this.winsGroup[i][j][k]){
+                                this.mywinGroup[k]++;
+                                this.cupwinGroup[k] = 6;
+                                if(this.mywinGroup[k] == 5){
+                                    alert('win')
+                                    this.over = true;
+                                }
+                            }
+                        }
+
+                        if(!this.over){
+                            this.me = !this.me;
+                            this.computerAI();
+                        }
+                    }else{
+                        alert('此处已经有子')
+                    }
                 }
             }
         }
@@ -105,6 +254,6 @@
 <style scoped>
     .game {background: url('../public/images/bj4.jpg') no-repeat;background-size: cover;}
     .gcontent {padding-top: 250px;}
-    #chess {margin:0 auto;box-shadow:-3px -3px 3px rgba(157,157,157,0.4);box-shadow:5px 5px 5px rgba(157,157,157,0.4);
-    background: #fff;display: block;}
+    #chess {margin:0 auto;box-shadow:-3px -3px 3px rgba(0,0,0,0.4);box-shadow:5px 5px 5px rgba(0,0,0,0.4);
+    background: rgb(215,176,147);display: block;}
 </style>
