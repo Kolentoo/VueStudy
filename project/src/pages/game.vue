@@ -1,8 +1,12 @@
 <template>
     <div class="game" ref="banner">
         <navigation></navigation>
-        <div class="gcontent">
-            <canvas id="chess" width="450px" height="450px" @click="go"></canvas>
+        <div class="gcontent" id="gcon">
+            <p class="title">五子棋</p>
+            <div class="chess-box">
+                <canvas id="chess" width="450" height="450" @click="go"></canvas>
+            </div>
+            <p class="start"@click="newGame">New Game</p>
         </div>
     </div>
 </template>
@@ -30,93 +34,95 @@
             this.$nextTick(function(){
                 let bHeight = document.documentElement.clientHeight;
                 this.$refs.banner.style.height=bHeight+'px';
-                this.e = this.$refs.chessBoard;
             });
         },
         mounted(){
-            var chess =document.getElementById('chess');
-            var context  = chess.getContext('2d');
-            context.strokeStyle = 'rgb(93,58,30)';
-
-            // 棋盘
-            for(let i = 0;i<15;i++){
-                context.moveTo(15+ i*30,15);
-                context.lineTo(15+ i*30,435);
-                context.stroke();
-                context.moveTo(15,15+i*30);
-                context.lineTo(435,15+i*30);
-                context.stroke();
-            }
-
-            for(let i = 0;i<15;i++){
-                this.chessBoard[i] = [];
-                for(let j = 0;j<15;j++){
-                    this.chessBoard[i][j] = 0;
-                }
-            }
-
-            // 赢法
-            var wins = []
-            for(let i = 0;i<15;i++){
-                wins[i]=[];
-                for(let j = 0;j<15;j++){
-                    wins[i][j]=[]
-                }
-            }
-            this.winsGroup = wins;
-            var count = 0;
-            // 横线
-            for(let i = 0;i<15;i++){
-                for(let j =0;j<11;j++){
-                    for(let k =0;k<5;k++){
-                        wins[i][j+k][count] = true;
-                    }
-                    count++;
-                }
-            }
-            // 竖线
-            for(let i = 0;i<15;i++){
-                for(let j =0;j<11;j++){
-                    for(let k =0;k<5;k++){
-                        wins[j+k][i][count] = true;
-                    }
-                    count++;
-                }
-            }
-            // 斜线
-            for(let i = 0;i<11;i++){
-                for(let j =0;j<11;j++){
-                    for(let k =0;k<5;k++){
-                        wins[i+k][j+k][count] = true;
-                    }
-                    count++;
-                }
-            }
-            // 散斜线
-            for(let i = 0;i<11;i++){
-                for(let j =14;j>3;j--){
-                    for(let k =0;k<5;k++){
-                        wins[i+k][j-k][count] = true;
-                    }
-                    count++;
-                }
-            }
-            this.countGroup = count;
-
-            var myWin = [];
-            var computerWin = [];
-            for(let i=0;i<count;i++){
-                myWin[i]=0;
-                computerWin[i]=0;
-            }
-            this.mywinGroup = myWin;
-            this.cupwinGroup = computerWin;
-
+            this.start();
         },
         components:{
             navigation
         },
         methods:{
+            start(){
+                var gcon = document.getElementById('gcon');
+                var chess =document.getElementById('chess');
+                var context  = chess.getContext('2d');
+                context.strokeStyle = 'rgb(93,58,30)';
+
+                // 棋盘
+                for(let i = 0;i<15;i++){
+                    context.moveTo(15+ i*30,15);
+                    context.lineTo(15+ i*30,435);
+                    context.stroke();
+                    context.moveTo(15,15+i*30);
+                    context.lineTo(435,15+i*30);
+                    context.stroke();
+                }
+
+                for(let i = 0;i<15;i++){
+                    this.chessBoard[i] = [];
+                    for(let j = 0;j<15;j++){
+                        this.chessBoard[i][j] = 0;
+                    }
+                }
+
+                // 赢法
+                var wins = []
+                for(let i = 0;i<15;i++){
+                    wins[i]=[];
+                    for(let j = 0;j<15;j++){
+                        wins[i][j]=[]
+                    }
+                }
+                this.winsGroup = wins;
+                var count = 0;
+                // 横线
+                for(let i = 0;i<15;i++){
+                    for(let j =0;j<11;j++){
+                        for(let k =0;k<5;k++){
+                            wins[i][j+k][count] = true;
+                        }
+                        count++;
+                    }
+                }
+                // 竖线
+                for(let i = 0;i<15;i++){
+                    for(let j =0;j<11;j++){
+                        for(let k =0;k<5;k++){
+                            wins[j+k][i][count] = true;
+                        }
+                        count++;
+                    }
+                }
+                // 斜线
+                for(let i = 0;i<11;i++){
+                    for(let j =0;j<11;j++){
+                        for(let k =0;k<5;k++){
+                            wins[i+k][j+k][count] = true;
+                        }
+                        count++;
+                    }
+                }
+                // 散斜线
+                for(let i = 0;i<11;i++){
+                    for(let j =14;j>3;j--){
+                        for(let k =0;k<5;k++){
+                            wins[i+k][j-k][count] = true;
+                        }
+                        count++;
+                    }
+                }
+                this.countGroup = count;
+
+                var myWin = [];
+                var computerWin = [];
+                for(let i=0;i<count;i++){
+                    myWin[i]=0;
+                    computerWin[i]=0;
+                }
+                this.mywinGroup = myWin;
+                this.cupwinGroup = computerWin;
+            },
             oneStep(i,j,me){
                 var chess =document.getElementById('chess');
                 var context  = chess.getContext('2d');
@@ -247,6 +253,9 @@
                         alert('此处已经有子')
                     }
                 }
+            },
+            newGame(){
+                window.location.reload();
             }
         }
     }
@@ -254,7 +263,9 @@
 
 <style scoped>
     .game {background: url('../public/images/bj4.jpg') no-repeat;background-size: cover;}
-    .gcontent {padding-top: 250px;}
-    #chess {margin:0 auto;box-shadow:-3px -3px 3px rgba(0,0,0,0.4);box-shadow:5px 5px 5px rgba(0,0,0,0.4);
-    background: rgb(215,176,147);display: block;}
+    .title {font-size: 20px;color:#fff;text-align: center;margin-bottom:30px;font-weight:bold;}
+    .gcontent {padding-top: 220px;}
+    .chess-box {background: rgb(215,176,147);margin:0 auto;box-shadow:-3px -3px 3px rgba(0,0,0,0.4);box-shadow:5px 5px 5px rgba(0,0,0,0.4);
+    display: block;width: 450px;height: 450px;}
+    .start {color:#fff;text-align: center;font-size: 18px;margin-top: 30px;font-weight:bold;cursor: pointer;}
 </style>
