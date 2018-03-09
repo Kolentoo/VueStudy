@@ -9,9 +9,9 @@
                 <p class="list1">Discover</p>
                 <p class="list2">Discover</p>
             </li>
-            <li class="menu-list fl" @click="navto('other')">
-                <p class="list1">Other</p>
-                <p class="list2">Other</p>
+            <li class="menu-list fl" @click="navto('query')">
+                <p class="list1">Query</p>
+                <p class="list2">Query</p>
             </li>
             <li class="menu-list fl" @click="navto('game')">
                 <p class="list1">Game</p>

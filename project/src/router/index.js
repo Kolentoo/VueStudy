@@ -8,7 +8,7 @@ import mdetail from '../pages/mdetail'
 import video from '../pages/video'
 import reading from '../pages/reading'
 import fun from '../pages/fun'
-import other from '../pages/other'
+import query from '../pages/query'
 import game from '../pages/game'
 
 Vue.use(Router)
@@ -67,9 +67,9 @@ export default new Router({
       component:fun
     },
     {
-      path:'/other',
-      name:'other',
-      component:other
+      path:'/query',
+      name:'query',
+      component:query
     },
     {
       path:'/game',

@@ -3,17 +3,6 @@
         <navigation></navigation>
         <div class="ocontent">
             <ul class="ocon">
-                <!--<li class="olist">
-                    <p class="iname">Question</p>
-                    <input class="keyword block" type="text" placeholder="your question" @keydown.enter="search()" ref="words">
-                    <div class="exam" v-for="(item,idx) in test" :key="idx">
-                        <p class="question"><b>问题：</b>{{item.content}}</p>
-                        <p class="answer" @click="findAnswer(idx)">
-                            <b>答案：</b>
-                            <em class="pointer" >{{item.answer}}</em>
-                        </p>
-                    </div>
-                </li>-->
                 <li class="olist">
                     <p class="iname">Weather</p>
                     <input class="keyword block" type="text" placeholder="city" @keydown.enter="city()" ref="city">
@@ -39,6 +28,26 @@
                         </ul>
                     </div>
                 </li>
+                <li class="olist">
+                    <p class="iname">Constellation</p>
+                    <ul :class="['astro-con',{height:ok}]">
+                        <li class="astro-list pointer" v-for="(item,idx) in constellation" :key="idx" @click="lucky(item.astroid)">
+                            <img class="astro-pic" :src="item.pic" alt="">
+                            <p class="astro-name">{{item.astroname}}</p>
+                            <p class="astro-time">{{item.date}}</p>
+                        </li>
+                    </ul>
+                    <div :class="['detail',{show:show}]">
+                        <h2 class="b tc">一周运势 ( {{condetail.astroname}} ) </h2>
+                        <p class="date"><b>date : </b>{{condetail.week.date}}</p>
+                        <p class="p1" v-if="condetail.week.career!=''"><b>career : </b>{{condetail.week.career}}</p>
+                        <p class="p1" v-if="condetail.week.health!=''"><b>health : </b>{{condetail.week.health}}</p>
+                        <p class="p1" v-if="condetail.week.job!=''"><b>job : </b>{{condetail.week.job}}</p>
+                        <p class="p1" v-if="condetail.week.love!=''"><b>love : </b>{{condetail.week.love}}</p>
+                        <p class="p1" v-if="condetail.week.money!=''"><b>money : </b>{{condetail.week.money}}</p>
+                        <img class="back block g10" @click="back()" src="../public/images/down.png" alt="">
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -49,36 +58,32 @@
     export default{
         data(){
             return{
-                test:[],
+                constellation:[],
+                condetail:{
+                    week:[]
+                },
                 weather:{
                     result:{
                         aqi:{},
                         daily:{}
                     }
-                }
+                },
+                ok:false,
+                show:false
             }
         },
         created(){
-            // 问题
-            // this.$axios.get('apid/jzw/search',{
-            //     params:{
-            //         'keyword':'水',
-            //         'pagenum':1,
-            //         'pagesize':2,
-            //         'appkey':'adfb0e1348ec0adf'
-            //     }
-            // }).then(res=>{
-            //     if(res.data.result){
-            //         this.total =res.data.result.list 
-            //         this.test = res.data.result.list.map(item=>{
-            //             return {content:item.content,answer:'查看答案'}
-            //         });
-            //     }
-            // });
 
-            // 天气
+            this.$axios.get('apid/astro/all',{
+                params:{
+                    'appkey':'adfb0e1348ec0adf'
+                }
+            }).then(res=>{
+                this.constellation = res.data.result
+            });
+
             this.$axios({
-                method:"post",
+                method:"get",
                 url:'apid/weather/query',
                 params:{
                     'appkey':'adfb0e1348ec0adf',
@@ -120,6 +125,38 @@
             },
             findAnswer(idx){
                 this.test[idx].answer = this.total[idx].answer
+            },
+            city(){
+                let cityName = this.$refs.city.value;
+                this.$axios({
+                    method:"post",
+                    url:'apid/weather/query',
+                    params:{
+                        'appkey':'adfb0e1348ec0adf',
+                        'city':cityName
+                    }
+                }).then(res=>{
+                    this.weather = res.data.result
+                    cityName=''
+                })
+            },
+            lucky(aid){
+                this.$axios({
+                    method:"post",
+                    url:'apid/astro/fortune',
+                    params:{
+                        'appkey':'adfb0e1348ec0adf',
+                        'astroid':aid
+                    }
+                }).then(res=>{
+                    this.condetail = res.data.result
+                    this.ok=true
+                    this.show=true
+                })
+            },
+            back(){
+                this.ok=false
+                this.show=false
             }
         }
     }
@@ -127,9 +164,9 @@
 
 <style scoped>
     .other {background: url('../public/images/bj3.jpg') no-repeat;background-size: cover;}
-    .ocontent {width: 1300px;margin:0 auto;padding-top: 200px;}
+    .ocontent {width: 1300px;margin:0 auto;padding-top: 250px;}
     .ocon {display: flex;justify-content: center;}
-    .olist {background:rgba(0,0,0,0.5);padding: 30px;width: 40%;margin:0 3%;}
+    .olist {background:rgba(0,0,0,0.5);padding: 30px;width: 40%;margin:0 3%;overflow: hidden;}
     .iname {font-size: 24px;font-weight:bold;color:#fff;text-align: center;}
     .keyword {width: 80%;text-align:center;height: 36px;line-height: 36px;font-size: 20px;background: rgba(255,255,255,0.5);border:none;
     border-radius:15px;outline:none;margin:30px auto 0;}
@@ -150,4 +187,15 @@
     .w-list .wtime {font-weight:bold;margin-bottom: 10px;font-size: 18px;}
     .w-list .allday {font-size: 14px;}
     .w-list .allday em{margin-right: 10px;}
+    .iname {margin-bottom: 25px;}
+    .astro-con {display: flex;flex-wrap:wrap;transition:all ease 0.5s;margin-top: 0;position: relative;z-index:30;}
+    .height {margin-top: -100%;}
+    .astro-list {width: 22%;margin:15px 1.5%;text-align: center;}
+    .astro-list img{margin-bottom: 5px;display: inline-block;transition:all ease 0.5s;transform:rotate(0deg);}
+    .astro-list:hover img{transform:rotate(90deg);}
+    .astro-list p{color:#fff;font-size: 16px;}
+    .detail {font-size: 16px;color:#fff;transition:all ease 0.5s;opacity: 0;z-index:-50;margin-top: -50%;}
+    .detail h2{font-size: 18px;margin-bottom: 25px;}
+    .back {margin:30px auto 0;cursor: pointer;width: 26px;}
+    .show {opacity: 1;z-index:5;margin-top: 100px;}
 </style>
