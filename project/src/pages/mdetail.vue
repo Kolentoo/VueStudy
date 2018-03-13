@@ -39,7 +39,7 @@
                 this.$refs.mdetail.style.height=bHeight+'px';
             })
             let mid = this.$route.params.mid;
-            this.$axios.get('apib/movie/detail.api?locationId=290',{
+            this.$axios.get('/movie/detail.api?locationId=290',{
                 params:{
                     movieId:mid
                 }

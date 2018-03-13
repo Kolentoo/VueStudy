@@ -74,7 +74,7 @@
         },
         created(){
 
-            this.$axios.get('apid/astro/all',{
+            this.$axios.get('/astro/all',{
                 params:{
                     'appkey':'adfb0e1348ec0adf'
                 }
@@ -84,7 +84,7 @@
 
             this.$axios({
                 method:"get",
-                url:'apid/weather/query',
+                url:'/weather/query',
                 params:{
                     'appkey':'adfb0e1348ec0adf',
                     'city':'上海'
@@ -103,7 +103,7 @@
         methods:{
             search(){
                 let words = this.$refs.words.value;
-                this.$axios.get('apid/jzw/search',{
+                this.$axios.get('/jzw/search',{
                     params:{
                         'keyword':words,
                         'pagenum':1,
@@ -130,7 +130,7 @@
                 let cityName = this.$refs.city.value;
                 this.$axios({
                     method:"post",
-                    url:'apid/weather/query',
+                    url:'/weather/query',
                     params:{
                         'appkey':'adfb0e1348ec0adf',
                         'city':cityName
@@ -143,7 +143,7 @@
             lucky(aid){
                 this.$axios({
                     method:"post",
-                    url:'apid/astro/fortune',
+                    url:'/astro/fortune',
                     params:{
                         'appkey':'adfb0e1348ec0adf',
                         'astroid':aid
