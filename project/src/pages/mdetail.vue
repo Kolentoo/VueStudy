@@ -38,10 +38,11 @@
                 let bHeight = document.documentElement.clientHeight;
                 this.$refs.mdetail.style.height=bHeight+'px';
             })
-            let mid = this.$route.params.mid;
-            this.$axios.get('/movie/detail.api?locationId=290',{
+            let movieId = this.$route.params.mid;
+            // this.$axios.get('apib/movie/detail.api?locationId=290',{
+            this.$axios.get(`/movie/detail.api/${movieId}`,{
                 params:{
-                    movieId:mid
+                    movieId:movieId
                 }
             }).then(res=>{
                 this.movieDetail=res.data
@@ -56,7 +57,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     ::-webkit-scrollbar{width:0px}
     ::-moz-scrollbar{width:0px}
     .mdetail {overflow: hidden;width: 100%;position: relative;}

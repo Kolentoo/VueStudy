@@ -70,7 +70,9 @@
 
         },
         created(){
-            this.$axios.get('apia/v4/discovery/hot',{
+            let num = 5;
+            // this.$axios.get('apia/v4/discovery/hot',{
+            this.$axios.get(`/v4/discovery/hot/${num}`,{
                 params:{
                     num:5
                 }
@@ -91,7 +93,7 @@
                     if(sw==true){  
                         self.loading = 'Loading'
                         sw = false;
-                        let xurl = self.nextPage.replace('http://baobab.kaiyanapp.com/api','apia');
+                        let xurl = self.nextPage.replace('http://baobab.kaiyanapp.com/api','');
                         self.$axios.get(xurl,{
                         }).then(res=>{
                             let newItem = res.data.itemList.filter((value,key,array)=>{

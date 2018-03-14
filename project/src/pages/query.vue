@@ -73,7 +73,7 @@
             }
         },
         created(){
-
+            // this.$axios.get('apid/astro/all',{
             this.$axios.get('/astro/all',{
                 params:{
                     'appkey':'adfb0e1348ec0adf'
@@ -84,10 +84,10 @@
 
             this.$axios({
                 method:"get",
-                url:'/weather/query',
+                url:'/weather/query/上海',
+                // url:'apid/weather/query',
                 params:{
-                    'appkey':'adfb0e1348ec0adf',
-                    'city':'上海'
+                    'appkey':'adfb0e1348ec0adf'
                 }
             }).then(res=>{
                 this.weather = res.data.result
@@ -103,6 +103,7 @@
         methods:{
             search(){
                 let words = this.$refs.words.value;
+                // this.$axios.get('apid/jzw/search',{
                 this.$axios.get('/jzw/search',{
                     params:{
                         'keyword':words,
@@ -129,24 +130,24 @@
             city(){
                 let cityName = this.$refs.city.value;
                 this.$axios({
-                    method:"post",
-                    url:'/weather/query',
+                    method:"get",
+                    // url:'apid/weather/query',
+                    url:`/weather/query/${cityName}`,
                     params:{
-                        'appkey':'adfb0e1348ec0adf',
-                        'city':cityName
+                        'appkey':'adfb0e1348ec0adf'
                     }
                 }).then(res=>{
                     this.weather = res.data.result
                     cityName=''
                 })
             },
-            lucky(aid){
+            lucky(astroid){
                 this.$axios({
-                    method:"post",
-                    url:'/astro/fortune',
+                    method:"get",
+                    // url:'apid/astro/fortune',
+                    url:`/astro/fortune/${astroid}`,
                     params:{
-                        'appkey':'adfb0e1348ec0adf',
-                        'astroid':aid
+                        'appkey':'adfb0e1348ec0adf'
                     }
                 }).then(res=>{
                     this.condetail = res.data.result

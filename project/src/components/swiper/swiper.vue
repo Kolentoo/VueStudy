@@ -73,14 +73,16 @@
     },    
     created(){
         if(this.movie==='now'){
-            this.$axios.get('/apib/PageSubArea/HotPlayMovies.api?locationId=290')
+            // this.$axios.get('/apib/PageSubArea/HotPlayMovies.api?locationId=290')
+            this.$axios.get('/PageSubArea/HotPlayMovies.api')
             .then(res=>{
                 this.nowList = res.data
                 this.seen=true
             })
         }
         if(this.movie==='new'){
-            this.$axios.get('/apib/Movie/MovieComingNew.api?locationId=290')
+            // this.$axios.get('/apib/Movie/MovieComingNew.api?locationId=290')
+            this.$axios.get('/Movie/MovieComingNew.api')
             .then(res=>{
                 this.nowList = res.data.moviecomings
                 this.swiperOption.navigation.nextEl='.s4'

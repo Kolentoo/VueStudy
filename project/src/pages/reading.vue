@@ -40,7 +40,7 @@
         },
         created(){
             let pages = this.pages;
-            this.$axios.get(`apic//api/data/Android/10/${pages}`,{
+            this.$axios.get(`/api/data/Android/10/${pages}`,{
                 params:{
                 }
             }).then(res=>{
