@@ -4,12 +4,15 @@
         <h2 v-if="movie==='new'">即将上映</h2>
         <div class="content">
             <swiper :options="swiperOption" v-if="seen">
-                <swiper-slide v-for="(item,idx) in nowList.movies" :key="idx" class="block" v-if="movie==='now'">
-                    <img :src="item.img" class="mpic block" @click="minfo(item.movieId)" alt="">
+                <swiper-slide v-for="(item,idx) in nowList.movies" :key="idx" class="block movie-list" v-if="movie==='now'">
+                    <div class="chart block">
+                        <img :src="item.img" class="mpic block" @click="minfo(item.movieId)" alt="">
+                    </div>
                     <div class="detail clearfix">
                         <div class="score fl tc">
                             <p class="p1">总评分</p>
-                            <p class="p2">{{item.ratingFinal}}</p>
+                            <p class="p2" v-if="item.ratingFinal!='-1'">{{item.ratingFinal}}</p>
+                            <p class="p2 p3" v-else="item.ratingFinal==='-1'">暂无</p>
                         </div>
                         <div class="minfo fl">
                             <p class="mname">{{item.titleCn}}</p>
@@ -19,8 +22,10 @@
                     <p class="comments">{{item.commonSpecial}}</p>
                 </swiper-slide>
 
-                <swiper-slide v-for="(item,idx) in nowList" :key="idx" class="block" v-if="movie==='new'">
-                    <img :src="item.image" class="mpic block" @click="minfo(item.id)" alt="" v-if="movie==='new'">
+                <swiper-slide v-for="(item,idx) in nowList" :key="idx" class="block movie-list" v-if="movie==='new'">
+                    <div class="chart block">
+                        <img :src="item.image" class="mpic block" @click="minfo(item.id)" alt="" v-if="movie==='new'">
+                    </div>
                     <p class="mtitle">{{item.title}} <i>({{item.releaseDate}})</i></p>
                     <p class="actor">演员：{{item.actor1}} {{item.actor2}}</p>
                     <p class="info"><em>类型：{{item.type}}</em> <em> 地区：{{item.locationName}}</em></p>
@@ -102,18 +107,23 @@
 <style>
     .section {width: 1400px;margin:30px auto 60px;}
     .section h2{font-size: 26px;margin-bottom: 20px;}
-    .mpic {width: 100%;max-height:380px;overflow: hidden;}
+    .chart {height: 380px;overflow: hidden;}
+    .mpic {width: 100%;max-height:380px;overflow: hidden;transition:all ease 0.5s;transform:scale(1,1);filter:blur(0.3px);}
+    .mpic:hover {transform: scale(1.05,1.05);}
     .score {width: 50px;height: 50px;background: #669c20;color:#fff;}
     .score .p1 {padding-top: 3px;}
     .score .p2 {font-size: 20px;margin-top: -2px;}
+    .score .p3 {font-size: 14px;margin-top: 4px;}
     .detail {margin-top: 10px;}
     .minfo {color:#333;margin:-2px 0 0 10px;}
     .mname {font-size: 20px;}
     .other {font-size: 14px;}
     .comments {font-size: 16px;color:#669c20;margin-top: 3px;}
     .content {position: relative;}
-    .section .swiper-btn {width: 65px;height: 65px;border-radius:50%;background: rgba(0,0,0,0.5);overflow: hidden;}
+    .section .swiper-btn {width: 65px;height: 65px;border-radius:50%;background: rgba(0,0,0,0.5);overflow: hidden;opacity: 1;transition:all ease 0.5s;
+    transform:scale(1,1);}
     .section .swiper-btn .arrow-btn {width: 24px;}
+    .section .swiper-btn:hover {opacity: 0.8;transform:scale(1.1,1.1);}
     .section .s1 {left: -150px;}
     .section .s2 {right: -150px;}
     .section .s3 {left: -150px;}
@@ -125,4 +135,5 @@
     .actor {font-size: 14px;}
     .info {font-size: 14px;}
     .see {font-size: 16px;color:#669c20;margin-top: 3px;}
+    .movie-list {cursor:pointer;}
 </style>

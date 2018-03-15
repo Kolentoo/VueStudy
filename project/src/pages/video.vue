@@ -5,9 +5,9 @@
             <video src="http://static.paixin.com/nossr/static/media/a3bce81e7ed152b290a46a505a9bfd8f.17682ef.mp4" autoplay="autoplay" loop="loop">
             </video>
             <div class="video-title">
-                <h1>FOR CREATIVES</h1>
-                <h2>Discover The World's Best Life</h2>
-                <div class="search-box">
+                <h1 class="vtitle">FOR CREATIVES</h1>
+                <h2 class="vtitle">Discover The World's Best Life</h2>
+                <div class="search-box hide">
                 <input type="text" class="search" placeholder="Search For Free Videos">
                 <img class="sbtn block" src="../public/images/search.png" alt="">
                 </div>
@@ -163,7 +163,7 @@
   .bannerChange {margin-top: -450px;}
   .video video{width: 100%;height:100%;cursor: inherit;object-fit: cover;}
   .video-title {position: absolute;width: 100%;top: 0;left: 0;}
-  .video h1{text-align: center;color:#fff;font-size: 65px;font-weight:bold;padding-top: 300px;transition:all ease 0.5s;}
+  .video h1{text-align: center;color:#fff;font-size: 65px;font-weight:bold;padding-top: 380px;transition:all ease 0.5s;}
   .bannerChange h1{padding-top: 100px;transition:all ease 0.5s;}
   .video h2{text-align: center;font-size: 38px;color:#fff;}
   .search-box {width: 850px;margin:50px auto 0;position: relative;}
@@ -192,4 +192,30 @@
       50%{transform:rotate(180deg);}
       100%{transform:rotate(360deg);}
   }
+
+  /*base code*/
+.vtitle {
+  animation:zoomInUp 1.5s;
+}
+
+@keyframes zoomInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
+    -ms-transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
+    transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
+    -webkit-animation-timing-function: cubic-bezier(0.55, .055, .675, .19);
+    animation-timing-function: cubic-bezier(0.55, .055, .675, .19)
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+    -ms-transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+    transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+    -webkit-animation-timing-function: cubic-bezier(0.175, .885, .32, 1);
+    animation-timing-function: cubic-bezier(0.175, .885, .32, 1)
+  }
+}
+
+
 </style>

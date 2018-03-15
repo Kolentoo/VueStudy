@@ -2,8 +2,8 @@
     <div class="movie">
         <navigation @bannerTop="bannerTop" @bannerBack="bannerBack"></navigation>
         <div :class="['mbanner',{'bannerChange':bannerChange}]" ref="banner">
-          <h1>Get inspired</h1>
-          <h2>share your best life</h2>
+          <h1 class="htitle">Get inspired</h1>
+          <h2 class="htitle">share your best life</h2>
         </div>
         <div class="content">
             <swiper :movie="type1"></swiper>
@@ -51,5 +51,21 @@
     .bannerChange {margin-top: -550px;}
     .mbanner h1{padding-top: 410px;text-align: center;color:#fff;font-size: 55px;font-weight:bold;}
     .mbanner h2{font-size: 40px;text-align: center;color:#fff;font-weight:bold;}
-    
+
+    .htitle {
+        animation:zoomIn 0.8s;
+    }
+    @keyframes zoomIn {
+        0% {
+            opacity: 0;
+            -webkit-transform: scale3d(.3, .3, .3);
+            -ms-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3)
+        }
+        50% {
+            opacity: 1
+        }
+    }
+
+
 </style>

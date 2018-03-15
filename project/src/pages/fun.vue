@@ -2,7 +2,7 @@
     <div class="video">
         <navigation @bannerTop="bannerTop" @bannerBack="bannerBack"></navigation>
         <div :class="['video-top',{bannerChange:bannerChange}]" ref="video">
-            <div class="video-title">
+            <div class="video-title ftitle">
                 <h1>FOR YOU</h1>
                 <h2>Hand-picked by our editors</h2>
             </div>
@@ -167,4 +167,43 @@
   .pop-con {padding:30px;}
   .pop-con h2{font-size: 30px;color:#333;margin:20px 0;}
   .pop-con .p1 {font-size: 14px;text-indent: 2em;width: 450px;margin:0 auto;overflow-y: scroll;height:800px;}
+
+  /*base code*/
+.ftitle {
+  animation:bounceInUp 1s;
+}
+@keyframes bounceInUp {
+  0%, 100%, 60%, 75%, 90% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+    transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 3000px, 0);
+    -ms-transform: translate3d(0, 3000px, 0);
+    transform: translate3d(0, 3000px, 0)
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, -20px, 0);
+    -ms-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0)
+  }
+  75% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    -ms-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0)
+  }
+  90% {
+    -webkit-transform: translate3d(0, -5px, 0);
+    -ms-transform: translate3d(0, -5px, 0);
+    transform: translate3d(0, -5px, 0)
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0)
+  }
+}
+
 </style>
