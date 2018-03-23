@@ -74,6 +74,7 @@
         },
         created(){
             // this.$axios.get('apid/astro/all',{
+                let self = this
             this.$axios.get('/astro/all',{
                 params:{
                     'appkey':'adfb0e1348ec0adf'

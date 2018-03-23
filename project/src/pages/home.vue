@@ -18,6 +18,20 @@
             <dd>Connect with me on <a id="square" class="weibo animated" href="https://weibo.com/u/1921492471?refer_flag=1001030101_" target="_blank">Weibo</a></dd>
         </dl>
     </div>
+    <div class="bottom clearfix">
+        <div class="bmask">
+            <ul class="coop">
+                <li>Cooperation : </li>	
+                <li><a href="http://www.flyatom.com" target="_blank">Blind fiddle</a></li>
+                <li><a href="http://www.choulovecandy.cn" target="_blank">チョウチョウのワールド</a></li>
+            </ul>
+            <ul class="connect">
+                <li>Kolento</li>
+                <li>Email：515835543@qq.com</li>
+                <li><a href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备18009386号</a></li>
+            </ul>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -72,6 +86,15 @@
     .index-intro h1 {font-size: 50px;font-weight:bold;line-height: 60px;}
     .index-intro dl{margin-top: 40px;}
     .index-intro dd{font-size: 18px;margin-bottom: 20px;}
+    .bottom {font-size: 14px;background: url('../public/images/bottom.jpg') no-repeat center center;-webkit-background-size: 100%;
+    background-size: 100%;height: 100px;position: relative;margin-top: 80px;}
+    .bmask {background: rgba(0,0,0,0.3);width: 100%;height: 100%;position: absolute;left: 0;bottom: 0;}
+    .bottom .coop {padding-top: 20px;}
+    .bottom ul{display: flex;justify-content: center;}
+    .bottom li {color:#fff;line-height: 30px;margin-right: 22px;transition:all ease 0.5s;}
+    .bottom li a{color:#fff;transition:all ease 0.5s;}
+    .bottom li a:hover{color:rgb(200,200,200);}
+    
 
     /*base code*/
     .animated {
