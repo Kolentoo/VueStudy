@@ -1,20 +1,28 @@
 <template>
     <div class="mdetail" ref="mdetail">
-        <img class="mbj block g10" :src="movieDetail.images[0]" alt="" ref="mbj">
+        <!-- <img class="mbj block g10" :src="movieDetail.images.small?movieDetail.images.small:movieDetail.images.large" alt="" ref="mbj"> -->
         <div class="mcontent">
-            <div class="mcon clearfix">
-                <img class="mimg block fl" :src="movieDetail.image" alt="">
-                <div class="info fr">
-                    <p class="title"><b>{{movieDetail.titleCn}}</b> ({{movieDetail.titleEn}})</p>
-                    <p class="year">年份：{{movieDetail.year}} 评分：{{movieDetail.rating}} {{movieDetail.scoreCount}}人评价</p>
-                    <p class="length">片长：{{movieDetail.runTime}} 类型：{{movieDetail.type}}</p>
-                    <p class="txt">{{movieDetail.content}}</p>
-                </div>
+            <div class="wrap">
+              <div class="mcon clearfix">
+                  <img class="mimg block fl" :src="movieDetail.images.small?movieDetail.images.small:movieDetail.images.large" alt="">
+
+                  <div class="video-box fr">
+                    <video class="g10" controls :src="movieDetail.trailer_urls[0]"></video>
+                  </div>
+
+                  <div class="info fr">
+                      <p class="title"><b>{{movieDetail.title}}</b> ({{movieDetail.original_title}})</p>
+                      <p class="year">年份：{{movieDetail.pubdate}} 评分：{{movieDetail.rating?movieDetail.rating.average:''}} {{movieDetail.ratings_count}}人评价</p>
+                      <p class="length">片长：{{movieDetail.durations[0]}} 类型：{{movieDetail.genres[0]}}</p>
+                      <p class="txt">{{movieDetail.summary}}</p>
+                  </div>
+              </div>
+
             </div>
             <div class="photo">
                 <ul class="photo-con">
                     <li class="photo-list pointer" v-for="(photo,idx) in photos" :key="idx" @click="bjChange(photo,idx)">
-                        <img class="block photo-pic" :src="photo" alt="">
+                        <img class="block photo-pic" :src="photo.cover" alt="">
                     </li>
                 </ul>
             </div>
@@ -27,31 +35,42 @@
         data(){
             return{
                 movieDetail:{
-                    images:[]
+                    images:[],
+                    durations:'',
+                    rating:'',
+                    genres:'',
+                    trailer_urls:[]
                 },
                 photos:[],
                 location:0
             }
         },
         created(){
-            this.$nextTick(function(){
-                let bHeight = document.documentElement.clientHeight;
-                this.$refs.mdetail.style.height=bHeight+'px';
-            })
+    
             let movieId = this.$route.params.mid;
-            // this.$axios.get('apib/movie/detail.api?locationId=290',{
-            this.$axios.get(`/movie/detail.api/${movieId}`,{
-                params:{
-                    movieId:movieId
-                }
+            this.$axios.get(`http://kolento.club/v2/movie/subject/${movieId}`,{
+                params:{}
             }).then(res=>{
                 this.movieDetail=res.data
-                this.photos = res.data.images
+                if(res.data.photos.length>6){
+                  this.photos = res.data.photos.slice(1,6)
+                }else{
+                  this.photos = res.data.photos
+                }
+                
             })
+        },
+        mounted(){
+          this.$nextTick(function(){
+            if(this.$refs.mdetail){
+              let bHeight = document.documentElement.clientHeight;
+              this.$refs.mdetail.style.height=bHeight+'px';
+            }
+          })
         },
         methods:{
             bjChange(picUrl,idx){
-                this.$refs.mbj.src=picUrl
+                this.$refs.mbj.src=picUrl.cover
             }
         }
     }
@@ -63,9 +82,9 @@
     .mdetail {overflow: hidden;width: 100%;position: relative;}
     .mbj {height: 100%;filter:blur(3px);}
     .mcontent {width: 100%;height: 100%;position: absolute;top: 0;left: 0;z-index:50;}
-    .mcon {width: 780px;padding:20px;background: rgba(0,0,0,0.5);color:#fff;margin:100px auto 0;}
-    .mimg {width: 230px;}
-    .info {width: 530px;}
+    .mcon {width: 1140px;padding:20px;background: rgba(0,0,0,0.5);color:#fff;margin:100px auto 0;}
+    .mimg {width: 220px;}
+    .info {width: 440px;}
     .title {font-size: 30px;margin-bottom: 10px;}
     .year {font-size: 14px;}
     .length {font-size: 14px;}
@@ -74,11 +93,14 @@
     .photo-con {display: flex;justify-content:center;align-items: stretch;margin:0 10%;}
     .photo-list {width: 20%;margin:0 2%;box-shadow:0 0 20px rgba(0,0,0,0.3);max-height:220px;}
     .photo-list img{width: 100%;height: 100%;}
+    .wrap {display:flex;justify-content: center;}
+    .wrap .video-box {width: 440px;height: 330px;padding-left:20px;}
 
     /*base code*/
-.photo-list:hover img{
-  animation:flipInX 1s;
-}
+    .photo-list:hover img{
+      animation:flipInX 1s;
+    }
+
 
 @keyframes flipInX {
   0% {

@@ -12,7 +12,26 @@
                 <h3>The top life, chosen by you</h3>
                 <h4>Discover what’s trending according to photographers around the world.</h4>
             </div>
-            <div class="content-body">
+
+
+            <div class="kolento">
+                <div class="kol-con">
+                    <div class="login-box">
+                    <div class="input-box">
+                        <input type="text" placeholder="请输入用户名" id="user">
+                    </div>
+                    <div class="input-box">
+                        <input type="password" placeholder="请输入密码" id="psd">
+                    </div>
+                    <p class="go pointer" id="login">登 录</p>
+                    </div>
+                </div>
+                </div>
+                <div class="pop">
+                <p class="msg"></p>
+            </div>
+
+            <!-- <div class="content-body">
                 <ul class="hd">
                     <li :class="['hd-list','pointer',{on:location===idx}]" v-for="(item,idx) in lilist" @click="tab(idx)">{{item}}</li>
                 </ul>
@@ -62,12 +81,55 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
+    import '../public/styles/styles.css';
+      window.onload=function(){
+        document.getElementById('login').onclick = function() {  
+          Login()
+        } 
+
+
+        document.getElementById('psd').onkeyup = function(e) {
+          if(e.keyCode == 13){
+            Login();
+          }
+          
+        }
+      }   
+      
+      
+      function Login(){
+        let user = document.getElementById('user');
+          let psd = document.getElementById('psd');
+          if(user.value===''){
+            // let userNotice = new Notification('消息提示', {
+            //   body: '请输入用户名'
+            // })
+
+          }else{
+            if(psd.value===''){
+            //   let psdNotice = new Notification('消息提示', {
+            //     body: '请输入密码'
+            //   })
+            }else{
+            //   if(psd.value==='kolento'){
+            //     localStorage.setItem('yourName',user.value);
+            //     window.location.href='./chart.html'
+            //   }else{
+            //     let errNotice = new Notification('消息提示', {
+            //       body: '密码错误'
+            //     })
+            //   }
+            }
+          }
+      }
+
+
     import navigation from '../components/menu/menu';
     export default{
         data(){
@@ -167,6 +229,8 @@
   .pop-con {padding:30px;}
   .pop-con h2{font-size: 30px;color:#333;margin:20px 0;}
   .pop-con .p1 {font-size: 14px;text-indent: 2em;width: 450px;margin:0 auto;overflow-y: scroll;height:800px;}
+
+  .kolento {margin-top: 50px;}
 
   /*base code*/
 .ftitle {

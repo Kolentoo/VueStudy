@@ -73,7 +73,6 @@
             }
         },
         created(){
-            // this.$axios.get('apid/astro/all',{
                 let self = this
             this.$axios.get('/astro/all',{
                 params:{
@@ -86,7 +85,6 @@
             this.$axios({
                 method:"get",
                 url:'/weather/query/上海',
-                // url:'apid/weather/query',
                 params:{
                     'appkey':'adfb0e1348ec0adf'
                 }
@@ -95,8 +93,8 @@
             })
         },
         mounted(){
-            let bHeight = document.documentElement.clientHeight;
-            this.$refs.banner.style.height=bHeight+'px';
+            // let bHeight = document.documentElement.clientHeight;
+            // this.$refs.banner.style.height=bHeight+'px';
         },
         components:{
             navigation
@@ -165,7 +163,7 @@
 </script>
 
 <style scoped>
-    .other {background: url('../public/images/bj3.jpg') no-repeat;background-size: cover;}
+    .other {background: url('../public/images/bj3.jpg') no-repeat;background-size: cover;height: 100vh;}
     .ocontent {width: 1300px;margin:0 auto;padding-top: 250px;}
     .ocon {display: flex;justify-content: center;}
     .olist {background:rgba(0,0,0,0.5);padding: 30px;width: 40%;margin:0 3%;overflow: hidden;}

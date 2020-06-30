@@ -65,8 +65,8 @@
             }, 800);
         },
         mounted(){
-            let bHeight = document.documentElement.clientHeight;
-            this.$refs.banner.style.height=bHeight+'px';
+            // let bHeight = document.documentElement.clientHeight;
+            // this.$refs.banner.style.height=bHeight+'px';
         },
         components:{
             navigation
@@ -80,7 +80,7 @@
 </script>
 
 <style>
-    .discover {background: url('../public/images/discover.jpg') no-repeat;background-size: cover;}
+    .discover {background: url('../public/images/discover.jpg') no-repeat;background-size: cover;height:100vh;}
     .dcontent {width: 1200px;margin:0 auto;padding-top: 140px;}
     .dgroup {display: flex;justify-content: center;width: 100%;}
     .dlist {width: 40%;position: relative;margin:20px 40px;height: 350px;overflow: hidden;box-shadow:0 0 20px rgba(0,0,0,0.5);}
